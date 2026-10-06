@@ -1,0 +1,11 @@
+http:
+  routers:
+    beacon-api:
+      rule: "Host(`beacon.example.com`)"
+      entryPoints: [web]
+      service: beacon-api
+  services:
+    beacon-api:
+      loadBalancer:
+        servers:
+          - url: "http://api:8080"

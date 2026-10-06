@@ -1,0 +1,31 @@
+# .NET
+bin/
+obj/
+*.user
+artifacts/
+.vs/
+TestResults/
+
+# Aspire / dev secrets
+**/appsettings.*.local.json
+
+# Node / frontend
+node_modules/
+dist/
+*.local
+.vite/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+*.tsbuildinfo
+
+# Never commit ACME/Let's Encrypt material
+acme.json
+**/acme.json

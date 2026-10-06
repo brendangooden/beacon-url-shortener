@@ -1,0 +1,34 @@
+root = true
+
+[*.cs]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+
+# S1192 — no duplicated string literals. Escalated to ERROR: a literal repeated 3+ times
+# fails the build. Fix by extracting a named constant, never a #pragma / inline suppression.
+dotnet_diagnostic.S1192.severity = error
+
+# CA1716: C#-only codebase. The rule flags names that clash with keywords in any .NET language
+# (e.g. the Features/Me slice clashes with VB's "Me"), which can never matter here.
+dotnet_diagnostic.CA1716.severity = none
+
+[**/Migrations/*.cs]
+# EF Core migrations are scaffolded by `dotnet ef` and never hand-edited — analyse as generated code.
+generated_code = true
+
+[tests/**.cs]
+# Repeated slugs/roles/oids across test cases are normal — relax to a suggestion.
+dotnet_diagnostic.S1192.severity = suggestion
+# Test names read as sentences (Rename_keeps_the_old_code_resolving) — underscores are the point.
+dotnet_diagnostic.CA1707.severity = none
+# Fixed test origins / Destinations (https://beacon.test, https://example.com/...) are test data, not config.
+dotnet_diagnostic.S1075.severity = suggestion
+
+[*.{json,js,jsx,ts,tsx,css,html,yml,yaml}]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+insert_final_newline = true

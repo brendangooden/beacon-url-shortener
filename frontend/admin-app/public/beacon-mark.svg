@@ -1,0 +1,41 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Beacon">
+  <defs>
+    <linearGradient id="mtower" x1="202" y1="0" x2="310" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8A97AE"/>
+      <stop offset="0.55" stop-color="#6B7A94"/>
+      <stop offset="1" stop-color="#52607A"/>
+    </linearGradient>
+    <linearGradient id="mamber" x1="0" y1="150" x2="0" y2="210" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FBC64B"/>
+      <stop offset="1" stop-color="#E8A317"/>
+    </linearGradient>
+    <clipPath id="mtowerClip">
+      <path d="M228 190 H284 L310 398 H202 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- light rays -->
+  <g stroke="#F5B733" stroke-width="12" stroke-linecap="round">
+    <line x1="256" y1="120" x2="256" y2="72"/>
+    <line x1="214" y1="130" x2="182" y2="94"/>
+    <line x1="298" y1="130" x2="330" y2="94"/>
+    <line x1="188" y1="164" x2="146" y2="150"/>
+    <line x1="324" y1="164" x2="366" y2="150"/>
+  </g>
+
+  <!-- lantern roof -->
+  <path d="M256 132 L286 162 H226 Z" fill="#9AA6BC"/>
+  <!-- lantern (the light) -->
+  <rect x="230" y="160" width="52" height="34" rx="6" fill="url(#mamber)"/>
+
+  <!-- tower -->
+  <path d="M228 190 H284 L310 398 H202 Z" fill="url(#mtower)"/>
+  <!-- amber signal band -->
+  <g clip-path="url(#mtowerClip)">
+    <rect x="196" y="286" width="120" height="34" fill="url(#mamber)"/>
+  </g>
+
+  <!-- base -->
+  <rect x="184" y="398" width="144" height="26" rx="10" fill="#5C6A85"/>
+  <rect x="168" y="420" width="176" height="18" rx="9" fill="#455170"/>
+</svg>

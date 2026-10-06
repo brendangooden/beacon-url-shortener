@@ -1,0 +1,22 @@
+<Project>
+
+  <PropertyGroup>
+    <Authors>Brendan Gooden</Authors>
+    <Copyright>Copyright (c) 2026 Brendan Gooden</Copyright>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!-- Every compiler/analyzer warning fails the build (CA*/IDE* and Sonar rules at warning
+         severity). Exemptions live in .editorconfig, each with a reason. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <!-- Analyzers apply to the whole solution (src + tests). -->
+  <ItemGroup>
+    <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

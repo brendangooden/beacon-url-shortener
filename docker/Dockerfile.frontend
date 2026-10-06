@@ -1,0 +1,24 @@
+# Build context = repo root. Builds the Vite SPA and serves it via nginx.
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY frontend/admin-app/package*.json ./
+RUN npm ci
+COPY frontend/admin-app/ ./
+# VITE_* are baked at build time. The SPA calls the API at a same-origin /api path.
+ARG VITE_API_URL=/api
+ARG VITE_APP_SHA=unknown
+# Entra (MSAL) config — when VITE_ENTRA_CLIENT_ID is empty the SPA stays in Dev-auth mode.
+ARG VITE_ENTRA_CLIENT_ID=
+ARG VITE_ENTRA_TENANT_ID=
+ARG VITE_ENTRA_SCOPE=
+ENV VITE_API_URL=$VITE_API_URL \
+    VITE_APP_SHA=$VITE_APP_SHA \
+    VITE_ENTRA_CLIENT_ID=$VITE_ENTRA_CLIENT_ID \
+    VITE_ENTRA_TENANT_ID=$VITE_ENTRA_TENANT_ID \
+    VITE_ENTRA_SCOPE=$VITE_ENTRA_SCOPE
+RUN npm run build
+
+FROM nginx:1.27-alpine AS runtime
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80

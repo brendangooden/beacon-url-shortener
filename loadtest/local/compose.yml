@@ -1,0 +1,39 @@
+# Local prod-like stack for load testing: Traefik -> API -> Postgres + Redis.
+# HTTP-only (no ACME/TLS locally). Traefik file provider (Docker socket negotiation
+# fails with Engine 29 on Windows), routing by Host header exactly like prod.
+services:
+  traefik:
+    image: traefik:v3.1
+    command:
+      - --providers.file.filename=/etc/traefik/dynamic.yml
+      - --providers.file.watch=true
+      - --entrypoints.web.address=:80
+      - --api.dashboard=false
+      - --accesslog=false
+      - --log.level=ERROR
+    ports:
+      - "8899:80"
+    volumes:
+      - ./traefik-dynamic.yml:/etc/traefik/dynamic.yml:ro
+    depends_on: [api]
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: beacon
+      POSTGRES_PASSWORD: testpass
+    tmpfs:
+      - /var/lib/postgresql/data   # RAM-backed: keep disk out of the measurement
+
+  cache:
+    image: redis:7-alpine
+
+  api:
+    image: beacon-api:load
+    depends_on: [db, cache]
+    environment:
+      ConnectionStrings__beacon: "Host=db;Database=beacon;Username=postgres;Password=testpass"
+      ConnectionStrings__cache: "cache:6379"
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ShortUrl__BaseUrl: "http://beacon.example.com"
+      Auth__SuperAdmins__Oids__0: "00000000-0000-0000-0000-000000000001"

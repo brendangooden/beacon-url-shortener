@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  "Beacon at dusk / harbor wayfinding."
+  Boldness is spent in exactly two places: the amber active-nav beacon and the mono code pills.
+  Everything else stays quiet. --accent is overridden at runtime by the admin's branding color.
+*/
+:root {
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --sidebar: #0e1726;
+  --rail: #0a0f1c;
+  --sidebar-fg: #c7d2e0;
+  --sidebar-muted: #64748b;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --border: #e3e8ef;
+  --accent: #e8a317;
+  --accent-fg: #1a1206;
+  --teal: #0e9e9c;
+  --danger: #dc2626;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1120;
+    --surface: #111827;
+    --surface-2: #0e1626;
+    --fg: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    /* sidebar stays ink navy; accent still runtime-overridable */
+    color-scheme: dark;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* The one memorable accent: the active-nav beacon, with a soft amber glow. */
+.beacon-active {
+  position: relative;
+  color: #ffffff;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.beacon-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 1.4rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

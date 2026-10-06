@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.vite/
+.git/
+.vs/
+.github/
+**/*.user
+**/appsettings.*.local.json
+.env
+.env.*
+.poc-deploy-state.json

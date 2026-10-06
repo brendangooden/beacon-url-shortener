@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Beacon.Api/Beacon.Api.csproj" />
+    <Project Path="src/Beacon.AppHost/Beacon.AppHost.csproj" />
+    <Project Path="src/Beacon.ServiceDefaults/Beacon.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Beacon.Api.IntegrationTests/Beacon.Api.IntegrationTests.csproj" />
+    <Project Path="tests/Beacon.Api.UnitTests/Beacon.Api.UnitTests.csproj" />
+    <Project Path="tests/Beacon.ArchTests/Beacon.ArchTests.csproj" />
+    <Project Path="tests/Beacon.TestInfrastructure/Beacon.TestInfrastructure.csproj" />
+  </Folder>
+</Solution>

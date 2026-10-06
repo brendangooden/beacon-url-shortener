@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore beacon.slnx
+
+      - name: Build
+        run: dotnet build beacon.slnx -c Release --no-restore
+
+      - name: Test
+        # Integration tests use Testcontainers, which the ubuntu runner's Docker daemon supports.
+        run: dotnet test --solution beacon.slnx -c Release --no-build
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/admin-app
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: frontend/admin-app/package-lock.json
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build

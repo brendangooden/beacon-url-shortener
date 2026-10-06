@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Beacon.Api\Beacon.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Respawn" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+    <!-- Interfaces only (IAsyncInitializer) so the factory can boot async under TUnit's
+         ClassDataSource. The full TUnit runner lives in the test projects. -->
+    <PackageReference Include="TUnit.Core" />
+  </ItemGroup>
+
+</Project>
